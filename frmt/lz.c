@@ -2,9 +2,26 @@
 #include "extmath.h"
 #include "../objparse/objparse.h"
 #include "../config/config.h"
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
+#ifdef WIN32
+#include <windows.h>
+#endif
+
 
 void writeLz()
 {
+#ifdef WIN32
+	CreateDirectory("./temp", NULL);
+#else
+	mkdir("./temp", 511);
+	chmod("./temp", 777);
+#endif
+
+
+		
 	//Write object data
 	FILE * temp = fopen("./temp/tempcfg.lz.raw.part","wb");
 	int sectOffs[4];
