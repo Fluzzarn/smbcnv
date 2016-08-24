@@ -1,5 +1,5 @@
 # SMBCNV, a Super Monkey Ball level converter
-By Yoshimaster96
+By Yoshimaster96  
 Updates by Fluzzarn
 
 ## About
@@ -11,6 +11,10 @@ This neat utility converts OBJ and MTL data, and exports a GMA, TPL and LZ model
 
 * None (just C standard library)
 
+### Building
+
+Windows: nmake win  
+Linux: make
 ### Known bugs:
 
 * Crashes if config file given doesn't exist
