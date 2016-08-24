@@ -5,6 +5,10 @@
 
 #include <stdio.h>
 #include <string.h>
+#ifdef WIN32
+#include <Windows.h>
+#include <Shlwapi.h>
+#endif
 
 /* Some structures */
 
@@ -78,6 +82,7 @@ extern int errCount;
 
 /* Functions */
 
-void parseObj(char * objpath);
+//returns true or false if reading succeeded
+int parseObj(char * objpath);
 
 #endif

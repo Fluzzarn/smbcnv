@@ -8,11 +8,14 @@ int main(int argc, char ** argv)
 	else
 	{
 		printf("Parsing OBJ file...\n");
-		parseObj(argv[1]);
-		printf("Parsing config file...\n");
-		parseConfig(argv[2]);
-		printf("Writing LZ file...\n");
-		writeLz();
-		printf("Done!\n");
+		if (parseObj(argv[1]))
+		{
+			printf("Parsing config file...\n");
+			parseConfig(argv[2]);
+			printf("Writing LZ file...\n");
+			writeLz();
+			printf("Done!\n");
+		}
+
 	}
 }
