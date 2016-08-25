@@ -11,58 +11,10 @@
 #endif
 
 
-void writePos(FILE* file, int posx, int posy, int posz)
-{
-		putc((posx>>24)&0xFF,file);
-		putc((posx>>16)&0xFF,file);
-		putc((posx>>8)&0xFF,file);
-		putc(posx&0xFF,file);
-		putc((posy>>24)&0xFF,file);
-		putc((posy>>16)&0xFF,file);
-		putc((posy>>8)&0xFF,file);
-		putc(posy&0xFF,file);
-		putc((posz>>24)&0xFF,file);
-		putc((posz>>16)&0xFF,file);
-		putc((posz>>8)&0xFF,file);
-		putc(posz&0xFF,file);
-}
-
-void writeRot(FILE* file, int rotx, int roty, int rotz)
-{
-	putc((rotx >> 8) & 0xFF, file);
-	putc(rotx & 0xFF, file);
-	putc((roty >> 8) & 0xFF, file);
-	putc(roty & 0xFF, file);
-	putc((rotz >> 8) & 0xFF, file);
-	putc(rotz & 0xFF, file);
-
-}
-
-void writeScale(FILE* file, int scaleX, int scaleY, int scaleZ)
-{
-	putc((scaleX >> 24) & 0xFF, file);
-	putc((scaleX >> 16) & 0xFF, file);
-	putc((scaleX >> 8) & 0xFF, file);
-	putc(scaleX & 0xFF, file);
-	putc((scaleY >> 24) & 0xFF, file);
-	putc((scaleY >> 16) & 0xFF, file);
-	putc((scaleY >> 8) & 0xFF, file);
-	putc(scaleY & 0xFF, file);
-	putc((scaleZ >> 24) & 0xFF, file);
-	putc((scaleZ >> 16) & 0xFF, file);
-	putc((scaleZ >> 8) & 0xFF, file);
-	putc(scaleZ & 0xFF, file);
-
-}
 void writeLz()
 {
 #ifdef WIN32
-	if (CreateDirectory("./temp", NULL) == 0)
-	{
-		
-		DWORD err = GetLastError();
-		
-	}
+	CreateDirectory("./temp", NULL);
 #else
 	mkdir("./temp", 511);
 	chmod("./temp", 777);
@@ -83,8 +35,24 @@ void writeLz()
 		int roty = cnvAngle(goals[i].roty);
 		int rotz = cnvAngle(goals[i].rotz);
 		int type = (goals[i].type==2?('R'<<8):(goals[i].type==1?('G'<<8):('B'<<8)));
-		writePos(temp,posx,posy,posz);
-		writeRot(temp, rotx, roty, rotz);
+		putc((posx>>24)&0xFF,temp);
+		putc((posx>>16)&0xFF,temp);
+		putc((posx>>8)&0xFF,temp);
+		putc(posx&0xFF,temp);
+		putc((posy>>24)&0xFF,temp);
+		putc((posy>>16)&0xFF,temp);
+		putc((posy>>8)&0xFF,temp);
+		putc(posy&0xFF,temp);
+		putc((posz>>24)&0xFF,temp);
+		putc((posz>>16)&0xFF,temp);
+		putc((posz>>8)&0xFF,temp);
+		putc(posz&0xFF,temp);
+		putc((rotx>>8)&0xFF,temp);
+		putc(rotx&0xFF,temp);
+		putc((roty>>8)&0xFF,temp);
+		putc(roty&0xFF,temp);
+		putc((rotz>>8)&0xFF,temp);
+		putc(rotz&0xFF,temp);
 		putc((type>>8)&0xFF,temp);
 		putc(type&0xFF,temp);
 	}
@@ -100,11 +68,38 @@ void writeLz()
 		int sclx = toInt(bumpers[i].sclx);
 		int scly = toInt(bumpers[i].scly);
 		int sclz = toInt(bumpers[i].sclz);
-		writePos(temp, posx, posy, posz);
-		writeRot(temp, rotx, roty, rotz);
+		putc((posx>>24)&0xFF,temp);
+		putc((posx>>16)&0xFF,temp);
+		putc((posx>>8)&0xFF,temp);
+		putc(posx&0xFF,temp);
+		putc((posy>>24)&0xFF,temp);
+		putc((posy>>16)&0xFF,temp);
+		putc((posy>>8)&0xFF,temp);
+		putc(posy&0xFF,temp);
+		putc((posz>>24)&0xFF,temp);
+		putc((posz>>16)&0xFF,temp);
+		putc((posz>>8)&0xFF,temp);
+		putc(posz&0xFF,temp);
+		putc((rotx>>8)&0xFF,temp);
+		putc(rotx&0xFF,temp);
+		putc((roty>>8)&0xFF,temp);
+		putc(roty&0xFF,temp);
+		putc((rotz>>8)&0xFF,temp);
+		putc(rotz&0xFF,temp);
 		putc(0,temp);
 		putc(0,temp);
-		writeScale(temp, sclx, scly, sclz);
+		putc((sclx>>24)&0xFF,temp);
+		putc((sclx>>16)&0xFF,temp);
+		putc((sclx>>8)&0xFF,temp);
+		putc(sclx&0xFF,temp);
+		putc((scly>>24)&0xFF,temp);
+		putc((scly>>16)&0xFF,temp);
+		putc((scly>>8)&0xFF,temp);
+		putc(scly&0xFF,temp);
+		putc((sclz>>24)&0xFF,temp);
+		putc((sclz>>16)&0xFF,temp);
+		putc((sclz>>8)&0xFF,temp);
+		putc(sclz&0xFF,temp);
 	}
 	sectOffs[2]=ftell(temp)+256;
 	for(int i=0; i<jamabarCount; i++)
@@ -118,11 +113,38 @@ void writeLz()
 		int sclx = toInt(jamabars[i].sclx);
 		int scly = toInt(jamabars[i].scly);
 		int sclz = toInt(jamabars[i].sclz);
-		writePos(temp, posx, posy, posz);
-		writeRot(temp, rotx, roty, rotz);
+		putc((posx>>24)&0xFF,temp);
+		putc((posx>>16)&0xFF,temp);
+		putc((posx>>8)&0xFF,temp);
+		putc(posx&0xFF,temp);
+		putc((posy>>24)&0xFF,temp);
+		putc((posy>>16)&0xFF,temp);
+		putc((posy>>8)&0xFF,temp);
+		putc(posy&0xFF,temp);
+		putc((posz>>24)&0xFF,temp);
+		putc((posz>>16)&0xFF,temp);
+		putc((posz>>8)&0xFF,temp);
+		putc(posz&0xFF,temp);
+		putc((rotx>>8)&0xFF,temp);
+		putc(rotx&0xFF,temp);
+		putc((roty>>8)&0xFF,temp);
+		putc(roty&0xFF,temp);
+		putc((rotz>>8)&0xFF,temp);
+		putc(rotz&0xFF,temp);
 		putc(0,temp);
 		putc(0,temp);
-		writeScale(temp, sclx, scly, sclz);
+		putc((sclx>>24)&0xFF,temp);
+		putc((sclx>>16)&0xFF,temp);
+		putc((sclx>>8)&0xFF,temp);
+		putc(sclx&0xFF,temp);
+		putc((scly>>24)&0xFF,temp);
+		putc((scly>>16)&0xFF,temp);
+		putc((scly>>8)&0xFF,temp);
+		putc(scly&0xFF,temp);
+		putc((sclz>>24)&0xFF,temp);
+		putc((sclz>>16)&0xFF,temp);
+		putc((sclz>>8)&0xFF,temp);
+		putc(sclz&0xFF,temp);
 	}
 	sectOffs[3]=ftell(temp)+256;
 	for(int i=0; i<bananaCount; i++)
@@ -161,132 +183,132 @@ void writeLz()
 		}
 		if(ignoreMe==0)
 		{
-			for(int j=0; j<tallyTris[i]; j++)
+		for(int j=0; j<tallyTris[i]; j++)
+		{
+			vec3 na = {cmnVertices.vs[cmnObjs[i].tris[j].vna-1].x,cmnVertices.vs[cmnObjs[i].tris[j].vna-1].y,cmnVertices.vs[cmnObjs[i].tris[j].vna-1].z};
+			vec3 a = {cmnVertices.vs[cmnObjs[i].tris[j].va-1].x,cmnVertices.vs[cmnObjs[i].tris[j].va-1].y,cmnVertices.vs[cmnObjs[i].tris[j].va-1].z};
+			vec3 b = {cmnVertices.vs[cmnObjs[i].tris[j].vb-1].x,cmnVertices.vs[cmnObjs[i].tris[j].vb-1].y,cmnVertices.vs[cmnObjs[i].tris[j].vb-1].z};
+			vec3 c = {cmnVertices.vs[cmnObjs[i].tris[j].vc-1].x,cmnVertices.vs[cmnObjs[i].tris[j].vc-1].y,cmnVertices.vs[cmnObjs[i].tris[j].vc-1].z};
+			vec3 ba = {b.x-a.x,b.y-a.y,b.z-a.z};
+			vec3 ca = {c.x-a.x,c.y-a.y,c.z-a.z};
+			vec3 normal = normalize(cross(normalize(ba),normalize(ca)));
+			float l = sqrtf(normal.x*normal.x + normal.z*normal.z);
+			float cy = normal.z/l;
+			float sy = -normal.x/l;
+			if(fabs(l)<0.001)
 			{
-				vec3 na = {cmnVertices.vs[cmnObjs[i].tris[j].vna-1].x,cmnVertices.vs[cmnObjs[i].tris[j].vna-1].y,cmnVertices.vs[cmnObjs[i].tris[j].vna-1].z};
-				vec3 a = {cmnVertices.vs[cmnObjs[i].tris[j].va-1].x,cmnVertices.vs[cmnObjs[i].tris[j].va-1].y,cmnVertices.vs[cmnObjs[i].tris[j].va-1].z};
-				vec3 b = {cmnVertices.vs[cmnObjs[i].tris[j].vb-1].x,cmnVertices.vs[cmnObjs[i].tris[j].vb-1].y,cmnVertices.vs[cmnObjs[i].tris[j].vb-1].z};
-				vec3 c = {cmnVertices.vs[cmnObjs[i].tris[j].vc-1].x,cmnVertices.vs[cmnObjs[i].tris[j].vc-1].y,cmnVertices.vs[cmnObjs[i].tris[j].vc-1].z};
-				vec3 ba = {b.x-a.x,b.y-a.y,b.z-a.z};
-				vec3 ca = {c.x-a.x,c.y-a.y,c.z-a.z};
-				vec3 normal = normalize(cross(normalize(ba),normalize(ca)));
-				float l = sqrtf(normal.x*normal.x + normal.z*normal.z);
-				float cy = normal.z/l;
-				float sy = -normal.x/l;
-				if(fabs(l)<0.001)
-				{
-					cy = 1.0;
-					sy = 0.0;
-				}
-				float cx = l;
-				float sx = normal.y;
-				vec3 Rxr0 = {1.0,0.0,0.0};
-				vec3 Rxr1 = {0.0,cx,sx};
-				vec3 Rxr2 = {0.0,-sx,cx};
-				vec3 Ryr0 = {cy,0.0,-sy};
-				vec3 Ryr1 = {0.0,1.0,0.0};
-				vec3 Ryr2 = {sy,0.0,cy};
-				vec3 dotry = dotm(ba,Ryr0,Ryr1,Ryr2);
-				vec3 dotrxry = dotm(dotry,Rxr0,Rxr1,Rxr2);
-				l = sqrtf(dotrxry.x*dotrxry.x + dotrxry.y*dotrxry.y);
-				float cz = dotrxry.x/l;
-				float sz = -dotrxry.y/l;
-				vec3 Rzr0 = {cz,sz,0.0};
-				vec3 Rzr1 = {-sz,cz,0.0};
-				vec3 Rzr2 = {0.0,0.0,1.0};
-				vec3 dotrz = dotm(dotrxry,Rzr0,Rzr1,Rzr2);
-				dotry = dotm(ca,Ryr0,Ryr1,Ryr2);
-				dotrxry = dotm(dotry,Rxr0,Rxr1,Rxr2);
-				vec3 dotrzrxry = dotm(dotrxry,Rzr0,Rzr1,Rzr2);
-				vec3 n0v = {dotrzrxry.x-dotrz.x,dotrzrxry.y-dotrz.y,dotrzrxry.z-dotrz.z};
-				vec3 n1v = {-dotrzrxry.x,-dotrzrxry.y,-dotrzrxry.z};
-				vec3 n0 = normalize(hat(n0v));
-				vec3 n1 = normalize(hat(n1v));
-				float rot_x = 360.0-reverse_angle(cx,sx);
-				float rot_y = 360.0-reverse_angle(cy,sy);
-				float rot_z = 360.0-reverse_angle(cz,sz);
-				int putMe = toInt(a.x);
-				putc((putMe>>24)&0xFF,temp);
-				putc((putMe>>16)&0xFF,temp);
-				putc((putMe>>8)&0xFF,temp);
-				putc(putMe&0xFF,temp);
-				putMe = toInt(a.y);
-				putc((putMe>>24)&0xFF,temp);
-				putc((putMe>>16)&0xFF,temp);
-				putc((putMe>>8)&0xFF,temp);
-				putc(putMe&0xFF,temp);
-				putMe = toInt(a.z);
-				putc((putMe>>24)&0xFF,temp);
-				putc((putMe>>16)&0xFF,temp);
-				putc((putMe>>8)&0xFF,temp);
-				putc(putMe&0xFF,temp);
-				putMe = toInt(normal.x);
-				putc((putMe>>24)&0xFF,temp);
-				putc((putMe>>16)&0xFF,temp);
-				putc((putMe>>8)&0xFF,temp);
-				putc(putMe&0xFF,temp);
-				putMe = toInt(normal.y);
-				putc((putMe>>24)&0xFF,temp);
-				putc((putMe>>16)&0xFF,temp);
-				putc((putMe>>8)&0xFF,temp);
-				putc(putMe&0xFF,temp);
-				putMe = toInt(normal.z);
-				putc((putMe>>24)&0xFF,temp);
-				putc((putMe>>16)&0xFF,temp);
-				putc((putMe>>8)&0xFF,temp);
-				putc(putMe&0xFF,temp);
-				putMe = cnvAngle(rot_x);
-				putc((putMe>>8)&0xFF,temp);
-				putc(putMe&0xFF,temp);
-				putMe = cnvAngle(rot_y);
-				putc((putMe>>8)&0xFF,temp);
-				putc(putMe&0xFF,temp);
-				putMe = cnvAngle(rot_z);
-				putc((putMe>>8)&0xFF,temp);
-				putc(putMe&0xFF,temp);
-				putc(0,temp);
-				putc(0,temp);
-				putMe = toInt(dotrz.x);
-				putc((putMe>>24)&0xFF,temp);
-				putc((putMe>>16)&0xFF,temp);
-				putc((putMe>>8)&0xFF,temp);
-				putc(putMe&0xFF,temp);
-				putMe = toInt(dotrz.y);
-				putc((putMe>>24)&0xFF,temp);
-				putc((putMe>>16)&0xFF,temp);
-				putc((putMe>>8)&0xFF,temp);
-				putc(putMe&0xFF,temp);
-				putMe = toInt(dotrzrxry.x);
-				putc((putMe>>24)&0xFF,temp);
-				putc((putMe>>16)&0xFF,temp);
-				putc((putMe>>8)&0xFF,temp);
-				putc(putMe&0xFF,temp);
-				putMe = toInt(dotrzrxry.y);
-				putc((putMe>>24)&0xFF,temp);
-				putc((putMe>>16)&0xFF,temp);
-				putc((putMe>>8)&0xFF,temp);
-				putc(putMe&0xFF,temp);
-				putMe = toInt(n0.x);
-				putc((putMe>>24)&0xFF,temp);
-				putc((putMe>>16)&0xFF,temp);
-				putc((putMe>>8)&0xFF,temp);
-				putc(putMe&0xFF,temp);
-				putMe = toInt(n0.y);
-				putc((putMe>>24)&0xFF,temp);
-				putc((putMe>>16)&0xFF,temp);
-				putc((putMe>>8)&0xFF,temp);
-				putc(putMe&0xFF,temp);
-				putMe = toInt(n1.x);
-				putc((putMe>>24)&0xFF,temp);
-				putc((putMe>>16)&0xFF,temp);
-				putc((putMe>>8)&0xFF,temp);
-				putc(putMe&0xFF,temp);
-				putMe = toInt(n1.y);
-				putc((putMe>>24)&0xFF,temp);
-				putc((putMe>>16)&0xFF,temp);
-				putc((putMe>>8)&0xFF,temp);
-				putc(putMe&0xFF,temp);
+				cy = 1.0;
+				sy = 0.0;
 			}
+			float cx = l;
+			float sx = normal.y;
+			vec3 Rxr0 = {1.0,0.0,0.0};
+			vec3 Rxr1 = {0.0,cx,sx};
+			vec3 Rxr2 = {0.0,-sx,cx};
+			vec3 Ryr0 = {cy,0.0,-sy};
+			vec3 Ryr1 = {0.0,1.0,0.0};
+			vec3 Ryr2 = {sy,0.0,cy};
+			vec3 dotry = dotm(ba,Ryr0,Ryr1,Ryr2);
+			vec3 dotrxry = dotm(dotry,Rxr0,Rxr1,Rxr2);
+			l = sqrtf(dotrxry.x*dotrxry.x + dotrxry.y*dotrxry.y);
+			float cz = dotrxry.x/l;
+			float sz = -dotrxry.y/l;
+			vec3 Rzr0 = {cz,sz,0.0};
+			vec3 Rzr1 = {-sz,cz,0.0};
+			vec3 Rzr2 = {0.0,0.0,1.0};
+			vec3 dotrz = dotm(dotrxry,Rzr0,Rzr1,Rzr2);
+			dotry = dotm(ca,Ryr0,Ryr1,Ryr2);
+			dotrxry = dotm(dotry,Rxr0,Rxr1,Rxr2);
+			vec3 dotrzrxry = dotm(dotrxry,Rzr0,Rzr1,Rzr2);
+			vec3 n0v = {dotrzrxry.x-dotrz.x,dotrzrxry.y-dotrz.y,dotrzrxry.z-dotrz.z};
+			vec3 n1v = {-dotrzrxry.x,-dotrzrxry.y,-dotrzrxry.z};
+			vec3 n0 = normalize(hat(n0v));
+			vec3 n1 = normalize(hat(n1v));
+			float rot_x = 360.0-reverse_angle(cx,sx);
+			float rot_y = 360.0-reverse_angle(cy,sy);
+			float rot_z = 360.0-reverse_angle(cz,sz);
+			int putMe = toInt(a.x);
+			putc((putMe>>24)&0xFF,temp);
+			putc((putMe>>16)&0xFF,temp);
+			putc((putMe>>8)&0xFF,temp);
+			putc(putMe&0xFF,temp);
+			putMe = toInt(a.y);
+			putc((putMe>>24)&0xFF,temp);
+			putc((putMe>>16)&0xFF,temp);
+			putc((putMe>>8)&0xFF,temp);
+			putc(putMe&0xFF,temp);
+			putMe = toInt(a.z);
+			putc((putMe>>24)&0xFF,temp);
+			putc((putMe>>16)&0xFF,temp);
+			putc((putMe>>8)&0xFF,temp);
+			putc(putMe&0xFF,temp);
+			putMe = toInt(normal.x);
+			putc((putMe>>24)&0xFF,temp);
+			putc((putMe>>16)&0xFF,temp);
+			putc((putMe>>8)&0xFF,temp);
+			putc(putMe&0xFF,temp);
+			putMe = toInt(normal.y);
+			putc((putMe>>24)&0xFF,temp);
+			putc((putMe>>16)&0xFF,temp);
+			putc((putMe>>8)&0xFF,temp);
+			putc(putMe&0xFF,temp);
+			putMe = toInt(normal.z);
+			putc((putMe>>24)&0xFF,temp);
+			putc((putMe>>16)&0xFF,temp);
+			putc((putMe>>8)&0xFF,temp);
+			putc(putMe&0xFF,temp);
+			putMe = cnvAngle(rot_x);
+			putc((putMe>>8)&0xFF,temp);
+			putc(putMe&0xFF,temp);
+			putMe = cnvAngle(rot_y);
+			putc((putMe>>8)&0xFF,temp);
+			putc(putMe&0xFF,temp);
+			putMe = cnvAngle(rot_z);
+			putc((putMe>>8)&0xFF,temp);
+			putc(putMe&0xFF,temp);
+			putc(0,temp);
+			putc(0,temp);
+			putMe = toInt(dotrz.x);
+			putc((putMe>>24)&0xFF,temp);
+			putc((putMe>>16)&0xFF,temp);
+			putc((putMe>>8)&0xFF,temp);
+			putc(putMe&0xFF,temp);
+			putMe = toInt(dotrz.y);
+			putc((putMe>>24)&0xFF,temp);
+			putc((putMe>>16)&0xFF,temp);
+			putc((putMe>>8)&0xFF,temp);
+			putc(putMe&0xFF,temp);
+			putMe = toInt(dotrzrxry.x);
+			putc((putMe>>24)&0xFF,temp);
+			putc((putMe>>16)&0xFF,temp);
+			putc((putMe>>8)&0xFF,temp);
+			putc(putMe&0xFF,temp);
+			putMe = toInt(dotrzrxry.y);
+			putc((putMe>>24)&0xFF,temp);
+			putc((putMe>>16)&0xFF,temp);
+			putc((putMe>>8)&0xFF,temp);
+			putc(putMe&0xFF,temp);
+			putMe = toInt(n0.x);
+			putc((putMe>>24)&0xFF,temp);
+			putc((putMe>>16)&0xFF,temp);
+			putc((putMe>>8)&0xFF,temp);
+			putc(putMe&0xFF,temp);
+			putMe = toInt(n0.y);
+			putc((putMe>>24)&0xFF,temp);
+			putc((putMe>>16)&0xFF,temp);
+			putc((putMe>>8)&0xFF,temp);
+			putc(putMe&0xFF,temp);
+			putMe = toInt(n1.x);
+			putc((putMe>>24)&0xFF,temp);
+			putc((putMe>>16)&0xFF,temp);
+			putc((putMe>>8)&0xFF,temp);
+			putc(putMe&0xFF,temp);
+			putMe = toInt(n1.y);
+			putc((putMe>>24)&0xFF,temp);
+			putc((putMe>>16)&0xFF,temp);
+			putc((putMe>>8)&0xFF,temp);
+			putc(putMe&0xFF,temp);
+		}
 		}
 		else noBgModels++;
 	}
